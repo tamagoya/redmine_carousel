@@ -16,9 +16,19 @@ class Carousel < ActiveRecord::Base
   before_save :set_issue_settings
   before_validation :set_period
   
+if Rails::VERSION::MAJOR >= 3
+  def self.to_run
+    where "NOW() > COALESCE(begin_at, '1970-01-01') AND NOW() > ADDDATE(COALESCE(last_run, '1970-01-01'), INTERVAL period SECOND)"
+  end
+
+  def self.active
+    where(:active => true)
+  end
+else
   named_scope :to_run, :conditions => "NOW() > COALESCE(begin_at, '1970-01-01') AND NOW() > ADDDATE(COALESCE(last_run, '1970-01-01'), INTERVAL period SECOND)"
   named_scope :active, :conditions => {:active => true}
-  
+end
+
   def after_initialize
     self.auto_assign ||= Hash.new
   end

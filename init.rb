@@ -1,5 +1,11 @@
 require 'redmine'
-require 'dispatcher'
+
+if Rails::VERSION::MAJOR < 3
+  require 'dispatcher'
+  object_to_prepare = Dispatcher
+else
+  object_to_prepare = Rails.configuration
+end
 
 # Patches to the Redmine core.
 require_dependency 'member_patch'
@@ -12,7 +18,7 @@ require_dependency 'projects_helper_patch'
 require_dependency 'core_ext/time'
 
 # Extend core classes through dispatcher so they can work also in development mode
-Dispatcher.to_prepare do
+object_to_prepare.to_prepare do
   Issue.send(:include, IssuePatch)
   Member.send(:include, MemberPatch)
   Project.send(:include, ProjectPatch)
