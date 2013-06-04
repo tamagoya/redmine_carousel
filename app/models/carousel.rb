@@ -113,7 +113,7 @@ end
   def validate_issue_settings
     return if issue_settings.valid?
     
-    issue_settings.errors.each_full{ |msg| errors.add_to_base(msg) }
+    issue_settings.errors.full_messages.each { |msg| errors.add(:issue_settings, msg) }
   end
 
 end

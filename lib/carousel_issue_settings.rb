@@ -1,5 +1,8 @@
 class CarouselIssueSettings < ActiveSupport::OrderedOptions
   include Redmine::I18n
+
+  # Required dependency for ActiveModel::Errors
+  extend ActiveModel::Naming
   
   REQUIRED_ATTRIBUTES = [
     :tracker_id, 
@@ -26,7 +29,7 @@ class CarouselIssueSettings < ActiveSupport::OrderedOptions
   end
   
   def errors
-    @errors ||= ActiveRecord::Errors.new(self)
+    @errors ||= ActiveModel::Errors.new(self)
   end
   
   def valid?
@@ -51,8 +54,12 @@ class CarouselIssueSettings < ActiveSupport::OrderedOptions
     super && super.to_i
   end
   
+  def read_attribute_for_validation(attr)
+    send(attr)
+  end
+
   # Translate attribute names for validation errors display
-  def self.human_attribute_name(attr)
+  def self.human_attribute_name(attr, options = {})
     l("field_#{attr.to_s.gsub(/_id$/, '')}")
   end
   

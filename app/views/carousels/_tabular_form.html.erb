@@ -1,4 +1,4 @@
-<%= error_messages_for :carousel %>
+<%= error_messages_for 'carousel' %>
 <div class="box tabular">
 	<p>
 		<%= tabular_form.text_field :name, :required => true %>
@@ -9,7 +9,7 @@
 	</p>
 
 	<p>
-		<%= tabular_form.text_field :begin_at, :size => 17, :required => true %><%= calendar_with_time_for('carousel_begin_at') %></a>
+		<%= tabular_form.text_field :begin_at, :size => 17, :required => true %><%= calendar_for('carousel_begin_at') %></a>
 	<p>
 		<%= tabular_form.text_field :time_period_quantity, :required => true, :size => 2, :label => :field_period %>
 		<%= tabular_form.select :time_period_seconds, options_from_collection_for_select(TimePeriod.all, :seconds, :name, @carousel.time_period_seconds), :no_label => true %>
@@ -23,10 +23,10 @@
 <fieldset class="box tabular">
 	<legend><%= l(:label_issue_settings) %></legend>
 	
-	<% tabular_form.fields_for @carousel.issue_settings do |issue_settings| %>
+	<%= tabular_form.fields_for :issue_settings do |issue_settings| %>
 
 		<p>
-			<%= issue_settings.text_field :subject, :required => true %>
+        <%= issue_settings.text_field :subject, :required => true, :value => @carousel.issue_settings.subject %>
 		</p>
 
 		<p>
@@ -45,7 +45,7 @@
 			<%= issue_settings.select :author_id, options_from_collection_for_select(@members, :id, :name, @carousel.issue_settings.author_id), {:label => :field_author, :required => true} %>
 		</p>
 	
-		<p><%= issue_settings.text_area :description,
+        <p><%= issue_settings.text_area :description, :value => @carousel.issue_settings.description,
 		                   :cols => 60,
 		                   :rows => (@carousel.issue_settings.description.blank? ? 10 : [[10, @carousel.issue_settings.description.length / 50].max, 100].min),
 		                   :accesskey => accesskey(:edit),

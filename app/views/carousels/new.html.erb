@@ -1,10 +1,9 @@
 <h2><%= l(:label_new_carousel) %></h2>
 
-<% labelled_tabular_form_for :carousel, @carousel, :url => project_carousels_url(@project), :html => {:id => 'carousel_form'} do |f| %>
+<%= labelled_form_for :carousel, @carousel, :url => project_carousels_url(@project), :html => {:id => 'carousel_form'} do |f| %>
 
 	<%= render :partial => 'tabular_form', :object => f %>
 	<%= f.submit 'Create' %>
-
 
 <% end %>
 
