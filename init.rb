@@ -14,9 +14,6 @@ require_dependency 'issue_patch'
 require_dependency 'user_patch'
 require_dependency 'projects_helper_patch'
 
-# Core extensions
-require_dependency 'core_ext/time'
-
 # Extend core classes through dispatcher so they can work also in development mode
 object_to_prepare.to_prepare do
   Issue.send(:include, IssuePatch)
