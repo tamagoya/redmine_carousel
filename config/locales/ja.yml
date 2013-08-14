@@ -15,3 +15,5 @@ ja:
   field_last_run: "最終実行日時"
   field_members: "メンバー"
   field_begin_at: "開始日時"
+  permission_manage_carousels: "定期チケットの管理"
+  project_module_carousels: "定期チケット"
