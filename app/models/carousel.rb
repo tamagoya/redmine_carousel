@@ -66,7 +66,9 @@ end
         :category     =>  project.issue_categories.find(issue_settings.category_id),
         :tracker      =>  project.trackers.find(issue_settings.tracker_id),
         :priority     =>  IssuePriority.find(issue_settings.priority_id),
-        :description  =>  issue_settings.description
+        :description  =>  issue_settings.description,
+        :start_date   =>  Time.now,
+        :due_date     =>  Time.now + time_period_seconds
       )
       carousel_issues.create!(:issue => issue, :user => issue.assigned_to)
       self.last_run = Time.now
