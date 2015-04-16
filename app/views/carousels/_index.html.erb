@@ -14,7 +14,7 @@
 	  <% @project.carousels.each do |carousel| %>		
 	  <tr class="carousel <%= cycle("odd", "even") %>">
 	    <td class="carousel_name"><%= link_to carousel.name, edit_project_carousel_path(@project, carousel) %></td>
-	    <td class="period"><%= distance_of_time_in_words(0, carousel.period) %></td>
+	    <td class="period"><%= if carousel.period <= 31104000 then distance_of_time_in_words(0, carousel.period) else "1 year over" end %></td>
 		<td class="members"><%= carousel.members.map(&:name).join('<br/>') %></td>
 	    <td class="last_run"><%= format_time(carousel.last_run) %></td>
 		<td class="active"><%= carousel.active? ? l(:general_text_yes) : l(:general_text_no) %></td>
